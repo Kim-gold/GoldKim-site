@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<!-- saved from url=(0050)file:///C:/Users/%E8%81%94%E6%83%B3/Desktop/2.html -->
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的博客</title>
+    <style>
+        /* 基础样式 */
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            background: black;
+            font-family: 'Arial', sans-serif;
+            color: white;
+        }
+
+        /* 容器样式 */
+        .container {
+            text-align: center;
+            position: relative;
+            z-index: 2; /* 确保文字显示在鼠标效果上方 */
+        }
+        .main-title {
+            font-size: 72px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            font-family: 'Lucida Handwriting', cursive;
+            color: white;
+        }
+        .sub-title {
+            font-size: 48px;
+            margin-bottom: 25px;
+            font-family: 'Comic Sans MS', cursive;
+            color: white;
+        }
+        .description {
+            font-size: 24px;
+            line-height: 1.8;
+            font-family: 'Georgia', serif;
+            color: white;
+        }
+
+        /* 自定义背景 */
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            background: radial-gradient(circle at 50% 70%, rgba(255, 255, 255, 0.1), transparent),
+                        radial-gradient(circle at 20% 20%, rgba(0, 100, 255, 0.6), transparent 60%),
+                        radial-gradient(circle at 80% 40%, rgba(255, 0, 0, 0.5), transparent 70%),
+                        radial-gradient(circle at 70% 80%, rgba(0, 255, 0, 0.5), transparent 50%),
+                        #000;
+            background-size: cover;
+        }
+
+        /* 鼠标聚焦圆形效果 */
+        .mouse-effect {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, transparent 80px, rgba(0, 0, 0, 0.9) 81px);
+            pointer-events: none;
+            z-index: 3;
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+    <div class="mouse-effect" style="background: radial-gradient(circle at 930px 604px, transparent 80px, rgba(0, 0, 0, 0.9) 81px);"></div>
+    <div class="container">
+        <div class="main-title">欢迎来到我的博客</div>
+        <div class="sub-title">分享生活与思考</div>
+        <div class="description">
+            在这里，你可以找到我的日常生活点滴，<br>
+            我的学习记录，以及一些有趣的故事。
+        </div>
+    </div>
+
+    <script>
+        const mouseEffect = document.querySelector('.mouse-effect');
+
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX;
+            const y = e.clientY;
+            mouseEffect.style.background = `radial-gradient(circle at ${x}px ${y}px, transparent 80px, rgba(0, 0, 0, 0.9) 81px)`;
+        });
+    </script>
+
+
+</body></html>
