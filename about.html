@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>金永君的简介</title>
+    <style>
+        /* 页面全局样式 */
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: stretch;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb, #a18cd1);
+            background-size: 400% 400%;
+            animation: gradientBG 8s infinite ease-in-out;
+            color: #333;
+            overflow: hidden;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* 左侧内容区域 */
+        .content {
+            flex: 3;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-family: "Brush Script MT", cursive, sans-serif;
+            color: #444;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        p {
+            font-size: 1.5rem;
+            line-height: 2;
+            margin-bottom: 20px;
+        }
+
+        /* 右侧功能栏样式 */
+        .sidebar {
+            flex: 1;
+            background-color: rgba(255, 255, 255, 0.8);
+            box-shadow: -2px 0 6px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            overflow-y: auto;
+        }
+
+        .sidebar h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #555;
+        }
+
+        .button {
+            display: block;
+            width: 100%;
+            padding: 12px 20px;
+            margin-bottom: 15px;
+            background-color: #007BFF;
+            color: white;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+        .email {
+            font-size: 1rem;
+            color: #555;
+            margin-top: 20px;
+        }
+
+        .email strong {
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+    <!-- 左侧内容 -->
+    <div class="content">
+        <h1>关于我</h1>
+        <p>你好，我是金永君，一位充满热情的人。</p>
+        <p>男性。</p>
+        <p>欢迎来到我的个人简介页面！</p>
+    </div>
+
+    <!-- 右侧功能栏 -->
+    <div class="sidebar">
+        <h2>功能</h2>
+        <button class="button" onclick="clearCache()">清浏览器缓存</button>
+        <button class="button" onclick="jumpToBaidu()">一键百度</button>
+        <button class="button" onclick="showEmail()">我的邮箱</button>
+        <p class="email" id="email" style="display: none;">邮箱：<strong>goldyongjun911@gmail.com</strong></p>
+    </div>
+
+    <script>
+        // 功能实现：清理浏览器缓存
+        function clearCache() {
+            alert("清理浏览器缓存功能已触发！");
+            console.log("缓存清理功能仅供展示，需后台支持实现。");
+        }
+
+        // 功能实现：跳转百度
+        function jumpToBaidu() {
+            window.open("https://www.baidu.com", "_blank");
+        }
+
+        // 功能实现：显示邮箱
+        function showEmail() {
+            const emailElement = document.getElementById("email");
+            emailElement.style.display = "block";
+        }
+    </script>
+</body>
+</html>
