@@ -17,7 +17,6 @@
             position: relative;
         }
 
-        /* 小猫的样式 */
         #cat {
             position: absolute;
             width: 100px;
@@ -29,7 +28,6 @@
             right: 20px;
         }
 
-        /* 老鼠的样式 */
         #mouse {
             position: absolute;
             width: 50px;
@@ -38,7 +36,6 @@
             background-size: cover;
         }
 
-        /* 捕捉成功消息 */
         #catchMessage {
             position: absolute;
             top: 50%;
@@ -49,7 +46,6 @@
             display: none;
         }
 
-        /* 排行榜 */
         #leaderboard {
             position: absolute;
             top: 10px;
@@ -72,7 +68,6 @@
             justify-content: space-between;
         }
 
-        /* 重新开始按钮 */
         #restartButton {
             position: absolute;
             top: 60%;
@@ -98,63 +93,49 @@
     <div id="cat"></div>
     <div id="mouse"></div>
 
-    <!-- 排行榜显示 -->
     <div id="leaderboard">
         <h2>排行榜</h2>
-        <div id="leaderboardEntries">
-            <div class="entry">
-                <span>金永君1号</span><span>3秒</span>
-            </div>
-            <div class="entry">
-                <span>金永君2号</span><span>8秒</span>
-            </div>
-            <div class="entry">
-                <span>金永君3号</span><span>11秒</span>
-            </div>
-            <div class="entry">
-                <span>金永君4号</span><span>15秒</span>
-            </div>
-            <div class="entry">
-                <span>你</span><span>--</span>
-            </div>
-        </div>
+        <div id="leaderboardEntries"></div>
     </div>
 
-    <!-- 重新开始按钮 -->
     <button id="restartButton">重新开始</button>
 
     <script>
         let cat = document.getElementById("cat");
         let mouse = document.getElementById("mouse");
         let catchMessage = document.getElementById("catchMessage");
-        let leaderboardEntries = document.getElementById("leaderboardEntries").children;
+        let leaderboardEntries = document.getElementById("leaderboardEntries");
         let restartButton = document.getElementById("restartButton");
-        let clickCount = 0;  // 记录捕捉次数
-        let totalCatchCount = 0;  // 总捕捉次数
-        let isFollowingMouse = false;  // 控制是否开始跟随鼠标
-        let startTime = 0;  // 捕捉开始时间
-        let catchTime = 0;  // 捕捉完成时间
-        let catStartPos = { x: 0, y: 0 }; // 猫的初始位置
-        let mouseMoved = true;  // 标记老鼠是否移动
+        let clickCount = 0;
+        let totalCatchCount = 0;
+        let isFollowingMouse = false;
+        let startTime = 0;
+        let catchTime = 0;
+        let catStartPos = { x: 0, y: 0 };
+        let mouseMoved = true;
 
-        // 随机生成老鼠的位置
+        const virtualPlayers = [
+            { name: '金永君1号', time: 3.00 },
+            { name: '金永君2号', time: 8.00 },
+            { name: '金永君3号', time: 11.00 },
+            { name: '金永君4号', time: 15.00 }
+        ];
+
         function randomMousePosition() {
-            let x = Math.random() * (window.innerWidth - 50); // 老鼠宽度为50px
-            let y = Math.random() * (window.innerHeight - 50); // 老鼠高度为50px
+            let x = Math.random() * (window.innerWidth - 50);
+            let y = Math.random() * (window.innerHeight - 50);
             mouse.style.left = x + "px";
             mouse.style.top = y + "px";
         }
 
-        // 点击猫时，开始跟随鼠标
         cat.addEventListener("click", function(event) {
             if (!isFollowingMouse) {
-                isFollowingMouse = true; // 开始跟随鼠标
-                randomMousePosition();  // 随机生成老鼠位置
-                totalCatchCount = 0;  // 重置捕捉次数
-                startTime = new Date().getTime();  // 记录开始时间
-                catStartPos = { x: cat.offsetLeft, y: cat.offsetTop }; // 记录猫的初始位置
+                isFollowingMouse = true;
+                randomMousePosition();
+                totalCatchCount = 0;
+                startTime = new Date().getTime();
+                catStartPos = { x: cat.offsetLeft, y: cat.offsetTop };
 
-                // 将猫的初始位置设置为鼠标点击的位置
                 let x = event.clientX - cat.offsetWidth / 2;
                 let y = event.clientY - cat.offsetHeight / 2;
                 cat.style.left = x + "px";
@@ -162,22 +143,19 @@
             }
         });
 
-        // 鼠标移动时，猫跟随鼠标
         document.addEventListener("mousemove", function(event) {
             if (isFollowingMouse) {
                 let x = event.clientX - cat.offsetWidth / 2;
                 let y = event.clientY - cat.offsetHeight / 2;
                 cat.style.left = x + "px";
-                cat.style.top = y + "px"; // 猫在鼠标下方平滑跟随
+                cat.style.top = y + "px";
             }
         });
 
-        // 初始化老鼠位置
         randomMousePosition();
 
-        // 检查猫是否接触到老鼠
         function checkCatTouchMouse() {
-            if (!mouseMoved) return;  // 捕捉成功后不再移动老鼠
+            if (!mouseMoved) return;
 
             let catRect = cat.getBoundingClientRect();
             let mouseRect = mouse.getBoundingClientRect();
@@ -188,74 +166,65 @@
                 catRect.top < mouseRect.bottom &&
                 catRect.bottom > mouseRect.top
             ) {
-                totalCatchCount++;  // 捕捉次数加1
-                randomMousePosition(); // 老鼠逃跑
+                totalCatchCount++;
+                randomMousePosition();
 
-                // 检查捕捉次数，达到20次后显示“捕捉成功”
                 if (totalCatchCount >= 20) {
-                    catchTime = (new Date().getTime() - startTime) / 1000; // 计算捕捉时间（秒）
+                    catchTime = (new Date().getTime() - startTime) / 1000;
                     showCatchSuccess();
                 }
             }
         }
 
-        // 显示捕捉成功消息
         function showCatchSuccess() {
-            mouse.style.backgroundImage = "url('caught_mouse.jpg')"; // 更换为被捕捉的老鼠图片
-            mouseMoved = false;  // 停止老鼠移动
+            mouse.style.backgroundImage = "url('caught_mouse.jpg')";
+            mouseMoved = false;
             catchMessage.style.display = "block";
 
-            // 等待2秒后隐藏消息，并更新排行榜
             setTimeout(function() {
                 catchMessage.style.display = "none";
                 updateLeaderboard();
-                restartButton.style.display = "block";  // 显示重新开始按钮
+                restartButton.style.display = "block";
             }, 2000);
         }
 
-        // 更新排行榜
         function updateLeaderboard() {
-            // 虚拟玩家的排名
+            let playerTime = catchTime.toFixed(2);
             let leaderboard = [
-                { name: '金永君1号', time: 3 },
-                { name: '金永君2号', time: 8 },
-                { name: '金永君3号', time: 11 },
-                { name: '金永君4号', time: 15 },
-                { name: '你', time: catchTime },  // 用户的时间插入
+                ...virtualPlayers,
+                { name: '你', time: parseFloat(playerTime) }
             ];
 
-            // 排序并按时间升序排列
             leaderboard.sort((a, b) => a.time - b.time);
 
-            // 更新前五名
-            for (let i = 0; i < leaderboard.length; i++) {
-                leaderboardEntries[i].children[1].textContent = leaderboard[i].time.toFixed(2) + "秒"; // 保留两位小数
-            }
+            leaderboardEntries.innerHTML = ''; // 清空旧排行榜
+            leaderboard.slice(0, 5).forEach(player => {
+                let entry = document.createElement('div');
+                entry.className = 'entry';
+                entry.innerHTML = `<span>${player.name}</span><span>${player.time.toFixed(2)}秒</span>`;
+                leaderboardEntries.appendChild(entry);
+            });
         }
 
-        // 重新开始按钮事件
         restartButton.addEventListener("click", function() {
             resetGame();
             restartButton.style.display = "none";
         });
 
-        // 重置游戏
         function resetGame() {
             totalCatchCount = 0;
             isFollowingMouse = false;
-            mouseMoved = true;  // 重新开始后让老鼠再次开始移动
+            mouseMoved = true;
             randomMousePosition();
+            mouse.style.backgroundImage = "url('mouse.jpg')"; // 恢复未捕捉老鼠图片
             cat.style.left = catStartPos.x + "px";
-            cat.style.top = catStartPos.y + "px"; // 重置猫的初始位置
+            cat.style.top = catStartPos.y + "px";
             startTime = 0;
             catchTime = 0;
-            catchMessage.style.display = "none";  // 隐藏捕捉成功信息
-            updateLeaderboard();  // 更新排行榜
+            catchMessage.style.display = "none";
         }
 
-        // 每秒检查猫是否触碰到老鼠
-        setInterval(checkCatTouchMouse, 10);  // 调整检查频率
-
+        setInterval(checkCatTouchMouse, 10);
     </script>
 </body>
 </html>
